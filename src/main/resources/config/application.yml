@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: kafka-stream-demo
+
+kafka:
+  stream:
+    application-id: ${spring.application.name}
+    bootstrap-servers: localhost:9092
+    processing-guarantee: "exactly_once"
+    key-serializer: "org.apache.kafka.common.serialization.Serdes.LongSerde"
+    value-serializer: "org.apache.kafka.common.serialization.Serdes.StringSerde"
+    number-of-threads: 3
+    number-of-standby-replicas: 1
+    topic:
+      source-topic: "source"
+      sink-topic: "sink"
