@@ -12,5 +12,5 @@ kafka:
     number-of-threads: 3
     number-of-standby-replicas: 1
     topic:
-      source-topic: "source"
-      sink-topic: "sink"
+      source-topic: "plain.text"
+      sink-topic: "word.count"

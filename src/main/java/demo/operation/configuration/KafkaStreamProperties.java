@@ -69,6 +69,13 @@ public class KafkaStreamProperties {
         if (this.producer.acks != null) {
             properties.put(StreamsConfig.producerPrefix(ProducerConfig.ACKS_CONFIG), this.producer.acks);
         }
+        if (this.producer.keySerializer != null) {
+            properties.put(StreamsConfig.producerPrefix(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG), this.producer.keySerializer);
+        }
+        if (this.producer.valueSerializer != null) {
+            properties.put(StreamsConfig.producerPrefix(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG), this.producer.valueSerializer);
+        }
+
         properties.putAll(this.properties);
         return new StreamsConfig(properties);
     }
@@ -76,6 +83,10 @@ public class KafkaStreamProperties {
     @Data
     public static class Producer {
         private String acks = "all"; // change default value 1 -> all
+
+        private Class<?> keySerializer;
+
+        private Class<?> valueSerializer;
     }
 
     @Data
