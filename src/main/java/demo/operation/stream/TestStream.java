@@ -6,6 +6,7 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.KStream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -13,8 +14,10 @@ import java.util.Arrays;
 @Component
 public class TestStream extends AbstractOperationStream {
 
+    @Autowired
     public TestStream(KafkaStreamProperties kafkaStreamProperties) {
-        this.kafkaStreams = new KafkaStreams(buildTopology(), kafkaStreamProperties.buildProperties());
+        this.topology = buildTopology();
+        this.kafkaStreams = new KafkaStreams(this.topology, kafkaStreamProperties.buildProperties());
     }
 
     private Topology buildTopology() {

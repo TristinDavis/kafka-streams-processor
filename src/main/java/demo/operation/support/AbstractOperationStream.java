@@ -8,16 +8,9 @@ import org.springframework.beans.factory.InitializingBean;
 import java.util.Objects;
 
 public abstract class AbstractOperationStream implements OperationStream, DisposableBean, InitializingBean {
-    protected String kafkaStreamsName;
-
     protected KafkaStreams kafkaStreams;
 
     protected Topology topology;
-
-    @Override
-    public String getKafkaStreamsName() {
-        return kafkaStreamsName;
-    }
 
     @Override
     public KafkaStreams getKafkaStreams() {
@@ -37,7 +30,6 @@ public abstract class AbstractOperationStream implements OperationStream, Dispos
     @Override
     public void afterPropertiesSet() throws Exception {
         Objects.requireNonNull(this.kafkaStreams);
-        Objects.requireNonNull(this.kafkaStreamsName);
         Objects.requireNonNull(this.topology);
         this.kafkaStreams.cleanUp();
         this.kafkaStreams.start();
