@@ -9,6 +9,4 @@ public interface OperationStream {
     KafkaStreams getKafkaStreams();
 
     Topology getTopology();
-
-    boolean canQueryable();
 }
