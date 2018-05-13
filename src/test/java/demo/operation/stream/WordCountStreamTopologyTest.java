@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static demo.operation.helper.TopologyTestHelper.SOURCE_TOPIC;
-import static demo.operation.stream.processor.CountProcessor.WORD_COUNT_STORE;
+import static demo.operation.stream.WordCountStream.WORD_COUNT_STORE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WordCountStreamTopologyTest {

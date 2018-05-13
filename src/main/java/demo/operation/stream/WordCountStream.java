@@ -1,8 +1,9 @@
 package demo.operation.stream;
 
 import demo.operation.configuration.KafkaStreamProperties;
-import demo.operation.stream.processor.CountProcessor;
+import demo.operation.stream.processor.CountProcessorSupplier;
 import demo.operation.stream.processor.SplitProcessorSupplier;
+import demo.operation.stream.processor.selectkey.SelectKey;
 import demo.operation.stream.support.AbstractManageableStream;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.apache.kafka.common.serialization.Serdes;
@@ -17,10 +18,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-import static demo.operation.stream.processor.CountProcessor.WORD_COUNT_STORE;
-
 @Component
 public class WordCountStream extends AbstractManageableStream {
+
+    static final String WORD_COUNT_STORE = "counts";
 
     private KafkaStreamProperties kafkaStreamProperties;
 
@@ -40,7 +41,8 @@ public class WordCountStream extends AbstractManageableStream {
 
         builder.addSource("source", kafkaStreamProperties.getSourceTopic().toArray(new String[]{}))
                .addProcessor("split", new SplitProcessorSupplier(), "source")
-               .addProcessor("count", CountProcessor::new, "split")
+               .addProcessor("selectKey", new SelectKey<Long, String, String>((k, v) -> v), "split")
+               .addProcessor("count", new CountProcessorSupplier<String, String>(WORD_COUNT_STORE), "selectKey")
                .addStateStore(countStoreBuilder(), "count")
                .addSink("sink", kafkaStreamProperties.getSinkTopic(),
                         new StringSerializer(), new LongSerializer(), "count");
