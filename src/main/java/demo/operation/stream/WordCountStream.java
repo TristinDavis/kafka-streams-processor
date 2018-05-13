@@ -2,7 +2,7 @@ package demo.operation.stream;
 
 import demo.operation.configuration.KafkaStreamProperties;
 import demo.operation.stream.processor.CountProcessor;
-import demo.operation.stream.processor.SplitProcessor;
+import demo.operation.stream.processor.SplitProcessorSupplier;
 import demo.operation.stream.support.AbstractManageableStream;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.apache.kafka.common.serialization.Serdes;
@@ -39,7 +39,7 @@ public class WordCountStream extends AbstractManageableStream {
         Topology builder = new Topology();
 
         builder.addSource("source", kafkaStreamProperties.getSourceTopic().toArray(new String[]{}))
-               .addProcessor("split", new SplitProcessor(), "source")
+               .addProcessor("split", new SplitProcessorSupplier(), "source")
                .addProcessor("count", CountProcessor::new, "split")
                .addStateStore(countStoreBuilder(), "count")
                .addSink("sink", kafkaStreamProperties.getSinkTopic(),

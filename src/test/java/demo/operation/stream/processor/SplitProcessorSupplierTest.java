@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class SplitProcessorTest {
+public class SplitProcessorSupplierTest {
 
     private Processor<Long, String> processor;
 
@@ -16,10 +16,10 @@ public class SplitProcessorTest {
 
     @Before
     public void setUp() throws Exception {
-        SplitProcessor splitProcessor = new SplitProcessor();
+        SplitProcessorSupplier splitProcessorSupplier = new SplitProcessorSupplier();
 
         context = mock(ProcessorContext.class);
-        processor = splitProcessor.get();
+        processor = splitProcessorSupplier.get();
         processor.init(context);
     }
 
