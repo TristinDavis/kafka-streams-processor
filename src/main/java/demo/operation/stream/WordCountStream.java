@@ -9,6 +9,7 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
+import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.StoreBuilder;
 import org.apache.kafka.streams.state.Stores;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class WordCountStream extends AbstractManageableStream {
         Topology builder = new Topology();
 
         builder.addSource("source", kafkaStreamProperties.getSourceTopic().toArray(new String[]{}))
-               .addProcessor("split", SplitProcessor::new, "source")
+               .addProcessor("split", new SplitProcessor(), "source")
                .addProcessor("count", CountProcessor::new, "split")
                .addStateStore(countStoreBuilder(), "count")
                .addSink("sink", kafkaStreamProperties.getSinkTopic(),
@@ -47,10 +48,11 @@ public class WordCountStream extends AbstractManageableStream {
         return builder;
     }
 
-    private StoreBuilder countStoreBuilder() {
+    private StoreBuilder<KeyValueStore<String, Long>> countStoreBuilder() {
         return Stores.keyValueStoreBuilder(Stores.persistentKeyValueStore(WORD_COUNT_STORE),
                                            Serdes.String(),
-                                           Serdes.Long()).withLoggingDisabled();
+                                           Serdes.Long())
+                     .withLoggingDisabled();
     }
 
 }

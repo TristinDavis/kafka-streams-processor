@@ -1,7 +1,6 @@
 package demo.operation.stream;
 
 import demo.operation.helper.TopologyTestHelper;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.streams.TopologyTestDriver;
@@ -18,7 +17,6 @@ import static demo.operation.helper.TopologyTestHelper.SOURCE_TOPIC;
 import static demo.operation.stream.processor.CountProcessor.WORD_COUNT_STORE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Slf4j
 public class WordCountStreamTopologyTest {
 
     private WordCountStream wordCountStream;
