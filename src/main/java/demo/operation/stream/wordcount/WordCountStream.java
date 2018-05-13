@@ -1,8 +1,6 @@
-package demo.operation.stream;
+package demo.operation.stream.wordcount;
 
 import demo.operation.configuration.KafkaStreamProperties;
-import demo.operation.stream.processor.CountProcessorSupplier;
-import demo.operation.stream.processor.SplitProcessorSupplier;
 import demo.operation.stream.processor.selectkey.SelectKey;
 import demo.operation.stream.support.AbstractManageableStream;
 import org.apache.kafka.common.serialization.LongSerializer;

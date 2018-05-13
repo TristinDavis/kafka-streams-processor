@@ -1,4 +1,4 @@
-package demo.operation.stream;
+package demo.operation.stream.wordcount;
 
 import demo.operation.helper.TopologyTestHelper;
 import org.apache.kafka.common.serialization.LongSerializer;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static demo.operation.helper.TopologyTestHelper.SOURCE_TOPIC;
-import static demo.operation.stream.WordCountStream.WORD_COUNT_STORE;
+import static demo.operation.stream.wordcount.WordCountStream.WORD_COUNT_STORE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WordCountStreamTopologyTest {

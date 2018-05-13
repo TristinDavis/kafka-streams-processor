@@ -1,4 +1,4 @@
-package demo.operation.stream.processor;
+package demo.operation.stream.wordcount;
 
 import demo.operation.stream.processor.flatmap.FlatMapValues;
 import org.yaml.snakeyaml.util.ArrayUtils;

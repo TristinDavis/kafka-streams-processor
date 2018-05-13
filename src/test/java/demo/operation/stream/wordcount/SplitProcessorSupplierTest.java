@@ -1,4 +1,4 @@
-package demo.operation.stream.processor;
+package demo.operation.stream.wordcount;
 
 import org.apache.kafka.streams.processor.Processor;
 import org.apache.kafka.streams.processor.ProcessorContext;
