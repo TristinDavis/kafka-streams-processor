@@ -1,8 +1,10 @@
 package demo.operation.stream.processor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.processor.Processor;
 import org.apache.kafka.streams.processor.ProcessorContext;
+import org.apache.kafka.streams.state.KeyValueIterator;
 import org.apache.kafka.streams.state.KeyValueStore;
 
 import java.util.Optional;
@@ -25,11 +27,21 @@ public class CountProcessor implements Processor<Long, String> {
 
     @Override
     public void process(Long key, String word) {
+        printAllDataInStateStore();
         Long count = getCountAndIncrement(word);
 
         counts.put(word, count);
         log.info("word : {}, count : {}", word, count);
         context.forward(word, count);
+    }
+
+    private void printAllDataInStateStore() {
+        KeyValueIterator<String, Long> iterator = counts.all();
+
+        while (iterator.hasNext()) {
+            KeyValue<String, Long> e = iterator.next();
+            log.info("Partition : {}, Key : {}, Value : {}", context.partition(), e.key, e.value);
+        }
     }
 
     @Override
